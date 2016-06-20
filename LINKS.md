@@ -30,7 +30,13 @@ https://ifttt.com/recipes
 
 https://ifttt.com/products/do/button
 
-## COMPUTER AIDED ELECTRONICS
+#### Freeboard
+
+https://freeboard.io/
+
+#### 
+
+## COMPUTER AIDED ELECTRONICS (CAE)
 
 #### Eagle
 
@@ -40,7 +46,7 @@ http://www.cadsoftusa.com/
 
 http://fritzing.org/home/
 
-## COMPUTER AIDED DESIGN
+## COMPUTER AIDED DESIGN (CAD)
 
 #### Rhino
 
@@ -58,9 +64,15 @@ https://www.tinkercad.com/
 
 https://inkscape.org/en/
 
+## COMPUTER AIDED MANUFACTURING (CAM)
+
 #### MakerCAM
 
 http://www.makercam.com/
+
+#### RhinoCAM
+
+http://mecsoft.com/rhinocam-mill/
 
 
 
