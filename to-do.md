@@ -1,0 +1,4 @@
+- [ ] assembly (exploded) diagram
+- [ ] parts list
+- [ ] list of links
+- [ ] r
