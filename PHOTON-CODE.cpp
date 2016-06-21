@@ -1,4 +1,13 @@
-// This #include statement was automatically added by the Particle IDE.
+/*
+IDEA:TE 2016
+Networked Fabrications: An IoT Primer
+Brett Ian Balogh
+brettbalogh@gmail.com
+June 20-22, 2016
+*/
+//
+// Includes
+//
 #include "neopixel/neopixel.h"
 //
 // Preprocessor directives
@@ -6,7 +15,7 @@
 #define BUTTON_PIN 6
 #define STATUS_PIN 7
 #define PIXEL_PIN 0
-#define PIXEL_COUNT 24
+#define PIXEL_COUNT 16
 #define PIXEL_TYPE WS2812B
 //
 // Create objects
@@ -28,11 +37,20 @@ bool busy = false;
 // Setup
 //
 void setup() {
+    //
+    // Register cloud stuff
+    //
     Particle.subscribe("B-EVENT", buttonEventHandler);
     Particle.function("B-FUNCTION", buttonFunction);
     Particle.variable("B-COUNTER", buttonPresses);
+    //
+    // Setup hardware
+    //
     pinMode(BUTTON_PIN, INPUT_PULLDOWN);
     pinMode(STATUS_PIN, OUTPUT);
+    //
+    // Setup neopixels
+    //
     ring.begin();
     ring.setBrightness(255);
         for(int i = 0; i < PIXEL_COUNT; i++){
@@ -79,17 +97,17 @@ void loop() {
 void comet(){
     busy = true;
     int brightness;
-    for(int k = 0; k < 2; k++){
+    for(int k = 0; k < 4; k++){
         for(int j = 0; j < PIXEL_COUNT; j++){
             for(int i = 0; i < PIXEL_COUNT; i++){
-                brightness = (255/(2*PIXEL_COUNT))*i;
+                brightness = (255/(PIXEL_COUNT))*i;
                 if(brightness < 0){
                     brightness = 0;
                 }
                 ring.setColorDimmed(pixelPos(j+i),255, 255, 255, brightness);
             }
             ring.show();
-            delay(300);
+            delay(40);
         }
     }
     busy = false;
@@ -199,16 +217,6 @@ uint32_t Wheel(byte WheelPos) {
   }
 }
 //
-// Clear all the pixels
-//
-void clearPixels(){
-    for(int i = 0; i < PIXEL_COUNT; i++){
-        ring.setPixelColor(i, 0, 0, 0);
-    }
-    ring.show();
-    ring.setBrightness(255);
-}
-//
 // Handle timer expiration
 //
 void timerStop(){
@@ -217,7 +225,7 @@ void timerStop(){
     Particle.publish("BUTTON-EVENT", String(buttonPushCounter));
     switch(buttonPushCounter){
         case 1:
-            randomColorWipe();
+            comet();
         break;
         case 2:
             twinkle();
@@ -237,7 +245,7 @@ void buttonEventHandler(const char *event, const char *data){
     int intData = stringData.toInt();
     switch(intData){
         case 1:
-            randomColorWipe();
+            comet();
         break;
         case 2:
             twinkle();
@@ -251,11 +259,10 @@ void buttonEventHandler(const char *event, const char *data){
 // Do something in repsonse to a function call
 //
 int buttonFunction(String args){
-    comet();
     int intArg = args.toInt();
     switch(intArg){
         case 1:
-            randomColorWipe();
+            comet();;
         break;
         case 2:
             twinkle();
@@ -265,7 +272,9 @@ int buttonFunction(String args){
         break;
     }
 }
-
+//
+// Utility for comet
+//
 int pixelPos(int i){
     int p;
     if(i < 0){
@@ -278,5 +287,15 @@ int pixelPos(int i){
         p = i;
     }
     return p;
+}
+//
+// Utility to clear all the pixels
+//
+void clearPixels(){
+    for(int i = 0; i < PIXEL_COUNT; i++){
+        ring.setPixelColor(i, 0, 0, 0);
+    }
+    ring.show();
+    ring.setBrightness(255);
 }
 
