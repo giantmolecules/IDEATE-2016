@@ -1,4 +1,4 @@
-- [*] assembly (exploded) diagram
-- [*] parts list
-- [*] list of links
+- [x] assembly (exploded) diagram
+- [x] parts list
+- [x] list of links
 - [ ] fritzing files
