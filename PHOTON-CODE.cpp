@@ -21,6 +21,8 @@ June 20-22, 2016
 // Create objects
 //
 Timer buttonTimer(2000, timerStop);
+Timer fadeInTimer(100, fadeIn, 1);
+Timer fadeOutTimer(100, fadeOut, 1);
 Adafruit_NeoPixel ring = Adafruit_NeoPixel(PIXEL_COUNT, PIXEL_PIN, PIXEL_TYPE);
 //
 // Variable Declarations
@@ -96,20 +98,21 @@ void loop() {
 //
 void comet(){
     busy = true;
+    int maxBrightness=255;
+    int sinx;
+    int rads;
     int brightness;
-    for(int k = 0; k < 4; k++){
+    for(int k = 0; k < 5; k++){
         for(int j = 0; j < PIXEL_COUNT; j++){
             for(int i = 0; i < PIXEL_COUNT; i++){
-                brightness = (255/(PIXEL_COUNT))*i;
-                if(brightness < 0){
-                    brightness = 0;
-                }
+                brightness = (maxBrightness/(PIXEL_COUNT))*i;
                 ring.setColorDimmed(pixelPos(j+i),255, 255, 255, brightness);
             }
             ring.show();
             delay(40);
         }
     }
+    clearPixels();
     busy = false;
 }
 //
@@ -297,5 +300,12 @@ void clearPixels(){
     }
     ring.show();
     ring.setBrightness(255);
+}
+
+void fadeIn(){
+    
+}
+void fadeOut(){
+    
 }
 
